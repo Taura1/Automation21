@@ -42,23 +42,38 @@ namespace AutomationHackaton
         }
 
         [Test]
-        public void Test2()
+        public void Task1()
         {
-            ChromeDriver.Navigate().GoToUrl("http://www.google.com");
+        }
 
-            var acceptButton = ChromeDriver.FindElement(By.XPath(".//button[.//div[normalize-space()='Sutinku']]"));
-            acceptButton.Click();
+        [Test]
+        public void Task2()
+        {
+        }
 
-            var searchInput = ChromeDriver.FindElement(By.Name("q"));
-            searchInput.SendKeys("devbridge");
-            searchInput.SendKeys(Keys.Enter);
+        [Test]
+        public void Task3()
+        {
+        }
 
-            var searchResults = ChromeDriver.FindElements(By.XPath(".//div[@class='g']"));
+        [Test]
+        public void Task4()
+        {
+        }
 
-            var searchResult = searchResults[1];
-            var link = searchResult.FindElement(By.CssSelector("a"));
+        [Test]
+        public void Task5()
+        {
+        }
 
-            Assert.True(link.GetAttribute("href").Contains("rekvizitai"));
+        [Test]
+        public void Task6()
+        {
+        }
+
+        [Test]
+        public void Task7()
+        {
         }
     }
 }
