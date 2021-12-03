@@ -2,6 +2,10 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using OpenQA.Selenium.Interactions;
 
@@ -149,8 +153,43 @@ namespace AutomationHackaton
         }
 
         [Test]
-        public void Task7()
+        public void Task7Memes()
         {
+            var http = new HttpClient();
+            var token = "xoxb-2256155121-2781463424375-nbVMXkKkzxKoFUmfCWoZiiRR";
+            http.DefaultRequestHeaders.Authorization
+                = new AuthenticationHeaderValue("Bearer", token);
+            var uri = "https://slack.com/api/files.upload";
+            var message = new HttpRequestMessage(HttpMethod.Post, uri);
+
+
+
+            var file = Convert.ToBase64String(File.ReadAllBytes("C:\\Users\\taura.frezdorfaite\\Pictures\\test.jpg"), Base64FormattingOptions.None);
+
+            List<KeyValuePair<string, string>> postData = new List<KeyValuePair<string, string>>();
+            postData.Add(new KeyValuePair<string, string>("channels", "db-automation-hackathon-2021"));
+            postData.Add(new KeyValuePair<string, string>("content", file.ToString()));
+            //postData.Add(new KeyValuePair<string, string>("file", file.ToString()));
+            postData.Add(new KeyValuePair<string, string>("fileType", "auto"));
+            postData.Add(new KeyValuePair<string, string>("token", token));
+            postData.Add(new KeyValuePair<string, string>("initial_comment", "Miau :3"));
+            //postData.Add(new KeyValuePair<string, string>("content", "Miau :3"));
+
+            using (var httpClient = new HttpClient())
+            {
+               // httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                using (var content = new FormUrlEncodedContent(postData))
+                {
+                    content.Headers.Clear();
+                    content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    //content.Headers.Add("Content-Type", "multipart/form-data");
+                    content.Headers.Add("Authentication", $"Bearer {token}");
+
+                    var result = httpClient.PostAsync(uri, content).Result;
+
+                }
+            }
+
         }
 
     }
